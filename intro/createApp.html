@@ -6,7 +6,36 @@
 <!-- 五步驟，載入 React -->
 <!-- https://reactjs.org/docs/cdn-links.html#gatsby-focus-wrapper -->
 <!-- https://reactjs.org/docs/add-react-to-a-website.html#quickly-try-jsx -->
+<!-- 步驟1-1 引入react -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<!-- 步驟1-2 引入babel for jsx -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<!-- 步驟3 加入 root 元素 -->
+<div id="root"></div>
+
+<script type="text/babel">
+
+// 步驟2 檢查資源有沒有正確引入
+console.log(React, ReactDOM)
+// 步驟4 建立 React 元件
+function App(){
+  return <h1>React 我來了</h1>
+}
+
+// 步驟5 渲染元件至根元件上
+const el = document.getElementById('root');
+const root = ReactDOM.createRoot(el)
+
+root.render(<App />)
+
+</script>
+
+
 <!-- 🙇🙇練習結束🙇🙇 -->
+
+
 </main>
   
     <aside
