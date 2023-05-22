@@ -3,6 +3,31 @@
 <div class="container main my-5"><div class="row"><main class="col post">
 <!-- 章節標題 --><div class="mb-4"><h1 class="mt-0 text-muted">環境安裝</h1><small>檔名：<code>createApp.html</code></small></div>
 <!-- 🔥🔥練習開始🔥🔥 -->
+<!--step1 載入React ＆ Babel -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!--step3 加入root 元素-->
+<div id="root"></div>
+
+<script type="text/babel">
+//step2 檢查資源是否正確載入
+console.log(React, ReactDOM)
+
+//step4 建立React元件（function name 首字都是大寫）
+//step4-1 建立function
+function App(){
+  return <h1>React I'm coming</h1>
+}
+//step4-2 選取根元件
+const el = document.getElementById('root')
+//step4-3 建立ReactDom元件
+const root = ReactDOM.createRoot(el)
+//step4-4 渲染元建至畫面
+root.render(<App/>)
+
+
+</script>
 <!-- 五步驟，載入 React -->
 <!-- https://reactjs.org/docs/cdn-links.html#gatsby-focus-wrapper -->
 <!-- https://reactjs.org/docs/add-react-to-a-website.html#quickly-try-jsx -->
