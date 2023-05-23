@@ -3,13 +3,29 @@
 <div class="container main my-5"><div class="row"><main class="col post">
 <!-- 章節標題 --><div class="mb-4"><h1 class="mt-0 text-muted">使用資料驅動</h1><small>檔名：<code>variables.html</code></small></div>
 <!-- 🔥🔥練習開始🔥🔥 -->
-<div id="root"></div>
+<div id="root">
+  
+</div>
 <!-- template：https://getbootstrap.com/docs/5.2/components/card/ -->
 <script type="text/babel">
 console.log(React, ReactDOM);
+function App(){
+  //class 在React裡面要寫成className
+  //style也有不同寫法，目前先直接移除
+  return <div className="card" >
+    <img src="https://images.unsplash.com/photo-1682687982134-2ac563b2228b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" className="card-img-top" alt="..."/>
+    <div className="card-body">
+      <h5 className="card-title">Card title</h5>
+      <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" className="btn btn-primary">Go somewhere</a>
+    </div>
+  </div>
+}
 
 
 const el = document.getElementById('root');
+const root = ReactDOM.createRoot(el)
+root.render(<App/>)
 </script>
 
 <!-- 🙇🙇練習結束🙇🙇 -->
