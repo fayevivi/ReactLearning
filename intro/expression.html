@@ -10,7 +10,16 @@
   https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Expressions_and_Operators
 -->
 <script>
-// 表達式與陳述式的差異
+// 兩種不同的function方式
+// 宣告式
+//function fn(params){
+
+//}
+// 表達式
+//const fn = function(params){
+
+//}
+
 </script>
 
 
@@ -28,6 +37,11 @@ function App() {
       <h5 className="card-title">{ data.name }</h5>
       <p className="card-text">{ data.description }</p>
       <a href={data.link} target="_blank" className="btn btn-primary">Go somewhere</a>
+      <br/>
+      { 1 }
+      { data.name ? data.name : 'vv'}
+      { /*if(data.name){}*/}
+      { (function(){return 2*2})() /*表達是的function可以被放在react的大括號裡面，然後外面用小括號包起來，後面再用一個小括號代表執行這個function*/}
     </div>
   </div>
 }
