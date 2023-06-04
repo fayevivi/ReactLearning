@@ -5,8 +5,21 @@
 <!-- 🔥🔥練習開始🔥🔥 -->
 <div id="root"></div>
 <script type="text/babel">
-function App() {
+//JSX的寫法：利用babel轉譯成原生Js
+  /*function App() {
   return <h1>React 我來了 <small className="text-danger">{new Date().toLocaleDateString() }</small></h1>
+}*/
+
+//原生Js的寫法
+function App(){
+  //標籤, HTML 屬性, 內容(,逗號之後可以再放此標籤內的其他element一樣用createElement的方式新增)
+  return React.createElement('hi', null, 'React 我來了',
+    React.createElement('small', {
+      className: 'text-danger',
+      title: '時間'
+    }, new Date().toLocaleDateString()),
+    '結尾'
+  )
 }
 
 const el = document.getElementById('root');
