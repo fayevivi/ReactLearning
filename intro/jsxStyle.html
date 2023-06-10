@@ -18,8 +18,19 @@
       link: 'https://www.casper.tw/',
     };
     return (
-      <div className='card'>
-        <div className='card-img-top'></div>
+      //style={{}}第一個大誇好代表可插入任何表達式；
+      //第二個大誇號代表物件
+      //冒號後為字串形式
+      //background-image要改成backgroundImage（不能有-）
+      //注意url用``樣板模式包起來比較方便
+      //不同屬性用,分隔而不是原生寫法的；
+      <div className='card' style={{width: '18rem'}}>
+        <div className='card-img-top' style={{
+          height:'200px',
+          backgroundImage: `url('https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-1.2.1&ampixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2352&amp;q=80')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center'
+        }}></div>
         <div className='card-body'>
           <h5 className='card-title'>{data.name}</h5>
           <p className='card-text'>{data.description}</p>
@@ -30,6 +41,14 @@
       </div>
     );
   }
+//原始寫法
+  /*const el = document.getElementById('root');
+  const root = ReactDOM.createRoot(el);
+  root.render(<App/>)*/
+//精簡寫法
+  ReactDOM
+    .createRoot(document.getElementById('root'))
+    .render(<App/>) 
 </script>
 
 <div class="card" style="width: 18rem">
