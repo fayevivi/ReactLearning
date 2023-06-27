@@ -6,35 +6,63 @@
 <div id="root"></div>
 <script type="text/babel">
 // #1 箭頭函式改寫
-function fn(a, b) {
+// function fn(a, b) {
+//   return a * b;
+// }
+//傳統寫法
+// const fn = function(){
+
+// }
+const fn = (a, b) => {
   return a * b;
 }
+//執行只有一行時<可減寫成如下
+// const fn = (a, b) => a * b
+// 當參數只有一個時，可省略小誇號
+// const fn2 = n => n
 console.log(fn(2, 4));
+// console.log(fn2(5))
+
+// const person = {
+//   name:'小明'
+// }
+//箭頭函式結果要為物件時，大誇號外面要包一個小誇號
+const fn3 = () => ({
+  name:'小明'
+})
+console.log('fn3',fn3())
 
 
 // #2 箭頭函式的 this 變化（React Hook 寫法不太會踩到這個雷）
-// var name = '全域'
-// const person = {
-//   name: '小明',
-//   callName: function () { 
-//     console.log('1', this.name); // 1 小明
-//     setTimeout(function () {
-//       console.log('2', this.name); // 2
-//       console.log('3', this); // 3
-//     }, 10);
-//   },
-// }
-// person.callName();
+var name = '全域'
+const person = {
+  name: '小明',
+  callName: function () { 
+    console.log('1', this.name); // 1 小明
+    // setTimeout(function () {
+    //   console.log('2', this.name); // 2
+    //   console.log('3', this); // 3
+    // }, 10);
+    //箭頭函式的this會在作用域範圍內
+    setTimeout(()=>{
+      console.log('2', this.name); // 2
+      console.log('3', this); // 3
+    }, 10)
+  },
+}
+person.callName();
 
 
 
 // #3 箭頭函式在 React 的運用
-function Card() {
+const Card = () => {
+// function Card() {
   return <div className="card">
     <div className="card-body">這是一張卡片</div>
   </div>
 }
-function App() {
+const App = () => {
+// function App() {
   return (
     <div>
       <Card></Card>
