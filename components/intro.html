@@ -9,7 +9,21 @@
   const App = () => {
     return (
       <>
-        React
+        <Header imgUrl="https://images.unsplash.com/photo-1585468274952-66591eb14165?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80"/>
+        <div className="row">
+          <div className="col-4">
+            <Sidebar list={['aaa','bbb','ccc']}/>
+          </div>  
+          <div className="col-8">
+            <ChartJs data={[{label: 'aaa', value:1000},
+            {label: 'bbb', value:3000},
+            {label: 'ccc', value:4500},
+          ]}/>
+          </div>
+        </div>
+        <Footer>
+          this is Footer
+        </Footer>
       </>
     );
   };
