@@ -18,6 +18,51 @@
     const options = { hour: 'numeric', minute: 'numeric' }
     console.log(location);
 
+    //元件的可利用性 Card
+    //當特定區塊的邏輯比較複雜時 Time
+
+    const Time = ({time}) => {
+      return <>
+        <div className="h4 my-2">
+            {new Date(time.startTime).toLocaleDateString(undefined, {day:'numeric'})}
+          </div>
+          {new Date(time.startTime).toLocaleString(undefined,{
+              hour:'numeric',
+              minute:'numeric'
+            })} <br/>
+          ~ <br/>
+          {new Date(time.endTime).toLocaleString(undefined,{
+              hour:'numeric',
+              minute:'numeric'
+            })}
+      </>
+    }
+
+    const Card = ({title, wx, pop}) => {
+      return <div className="card">
+        <div className="card-header">
+          <div className="h4 my-0">{title}</div>
+        </div>
+        <div className="card-body">
+          <div className="row row-cols-3">
+            {/*city.weatherElement[0] wx*/}
+            {/*city.weatherElement[4] PoP*/}
+            {
+              wx.time.map((time, index)=> {
+                return (
+                  <div className="col" key={index}>
+                    <Time time={time}/>
+                    <img src={`./weatherIcon/${time.parameter.parameterName}.svg`} alt={time.parameter.parameterName}/> 
+                    <div className="mt-2">{time.parameter.parameterName}</div>
+                    <div className="mt-2"><i className="bi bi-umbrella"></i>{pop.time[index].parameter.parameterName}</div> 
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
+      </div>
+    }
     //location > WeatherElement(Array)
     //Wx 天氣概況 > time(Array)
     //MaxT 最高氣溫
@@ -32,40 +77,7 @@
                 location.map((city) => {
                   return (
                     <div className="col" key={city.locationName}>
-                      <div className="card">
-                        <div className="card-header">
-                          <div className="h4 my-0">{city.locationName}</div>
-                        </div>
-                        <div className="card-body">
-                          <div className="row row-cols-3">
-                            {/*city.weatherElement[0] wx*/}
-                            {/*city.weatherElement[4] PoP*/}
-                            {
-                              city.weatherElement[0].time.map((time, index)=> {
-                                return (
-                                  <div className="col" key={index}>
-                                    <div className="h4 my-2">
-                                      {new Date(time.startTime).toLocaleDateString(undefined, {day:'numeric'})}
-                                    </div>
-                                    {new Date(time.startTime).toLocaleString(undefined,{
-                                        hour:'numeric',
-                                        minute:'numeric'
-                                      })} <br/>
-                                    ~ <br/>
-                                    上午6:00
-                                    <img src={`./weatherIcon/${time.parameter.parameterName}.svg`} alt={time.parameter.parameterName}/> 
-                                    <div className="mt-2">{time.parameter.parameterName}</div>
-                                    <div className="mt-2"><i className="bi bi-umbrella"></i>{city.weatherElement[4].time[index].parameter.parameterName}</div> 
-                                  </div>
-                                )
-                              })
-                            }
-                             
-                            <div className="col"></div>
-                            <div className="col"></div>
-                          </div>
-                        </div>
-                      </div>
+                      <Card title={city.location} wx={city.weatherElement[0]} pop={city.weatherElement[4]}/>
                     </div>
                   )
                 })
