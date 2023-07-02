@@ -5,8 +5,9 @@
 <!-- 🔥🔥練習開始🔥🔥 -->
 <div id="root"></div>
 <script type="text/babel">
-  const PrimaryButton = ({className, callToAction}) => {
-    return  <button type="button" className={`btn ${className}`}>{callToAction}</button>
+  const PrimaryButton = ({className, children}) => {
+    console.log(children)
+    return  <button type="button" className={`btn ${className}`}>{children}</button>
   }
   const Card = ({title, price, content, callToAction}) => {
     return (<div className="card mb-4">
@@ -17,7 +18,7 @@
         <h1 className="card-title">{typeof price === 'number' ? <>${price}<small>/月</small></> : price }</h1>
         <p>{content}</p>
         {
-          title === '企業版' ? <PrimaryButton className="btn-primary" callToAction={callToAction}/> : <PrimaryButton className="btn-outline-primary" callToAction={callToAction}/>
+          title === '企業版' ? <PrimaryButton className="btn-primary"><i className="bi bi-gem"></i> {callToAction} <i className="bi bi-gem"></i></PrimaryButton> : <PrimaryButton className="btn-outline-primary" callToAction={callToAction}>{callToAction}</PrimaryButton>
         }
       </div>
     </div>)
