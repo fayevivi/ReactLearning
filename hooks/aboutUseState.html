@@ -5,18 +5,54 @@
 <!-- 🔥🔥練習開始🔥🔥 -->
 <div id="root"></div>
 <script type="text/babel">
+const { useState } = React;
+console.log(useState)
 // #1 useState 的方法在哪裡？
+// function useCustomState(params){
+  // React 處理
+  // 純值， 方法(通知元件，值已經更新)
 
+  // return [params, function dispatchSetState(){}]
+// }
+// const [text, useText] = useState('這是一段文字');
 // #2 useState 僅能在 Component 內運作
-
+// const [text, useText] = useState('text');
 
 // #3 state 是 ReadOnly
 // #3-1 為了讓 React 知道資料已更新，所以會使用另一個方法進行觸發
 const App = () => {
   // #3-2 這影響了許多會操作原始值的方法
+  const [num, setNum] = useState(1);
+
+  const [arr, setArr] = useState([1, 2, 3])
+  function removeArrDate(){
+    // pop移除陣列最後一個值，並將值回傳
+    // console.log(arr.pop())
+    // arr.pop()
+    // 更新後的值，透過setArr的方式寫入[1, 2]
+
+    // console.log(arr.filter(item => item !== arr.length))
+    setArr(arr.filter((item) => item !== arr.length))
+  }
+
+  function addArrDate(){
+    // 新增陣列資料<並新增在最後方 push
+    // console.log(arr.push(4))
+    // setArr(arr.push(4))
+    // 新增一筆，更新後的值[1, 2, 3, 4]
+    console.log([...arr, arr.length + 1]);
+    setArr([...arr, arr.length + 1]);
+  }
 
   return (<div>
-    
+    <button type="button" onClick={() => setNum(num + 1)}>{num}</button>
+    <ul>
+      {arr.map((i)=>{
+        return <li key={i}>{i}</li>
+      })}
+    </ul>
+    <button type="button" onClick={removeArrDate}>移除陣列資料</button>
+    <button type="button" onClick={addArrDate}>新增陣列資料</button>
   </div>)
 }
 
