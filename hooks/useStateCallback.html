@@ -13,12 +13,32 @@ const App = () => {
   const [arr, setArr] = useState([]);
 
 
+  function mergeArrData(){
+    // console.log(arr)
+    const newArray = [{num:1},{num:2},{num:3}]
+    // setArr([...arr, ...newArray]);
+    //callback
+    setArr((pre)=>{
+      console.log('pre',pre);
+      return [...pre, ...newArray]
+    })
+  }
+
+
+  useEffect(()=>{
+    // mergeArrData()
+
+    setInterval(()=>{
+      mergeArrData()
+    },1000)
+  },[])
+
   return (<div>
     
     <ul>
       {arr.map((item, key) => <li key={key}>{ item.num }</li>)}
     </ul>
-    <button type="button" >新增一組陣列及合併</button>
+    <button type="button" onClick={mergeArrData}>新增一組陣列及合併</button>
   </div>)
 }
 
