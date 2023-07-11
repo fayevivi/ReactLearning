@@ -34,14 +34,22 @@ const SearchBox = ({onSearchHandler, filterString}) => {
 // 讀取效果
 // 取得單張照片顯示在畫面上
 
-
+const Loading = ({isLoading}) => {
+  return (<div className="isloading" style={{display: isLoading ? 'flex' : 'none'}}>
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  )
+}
 
 const App = () => {
   const [filterString, setFilterString] = useState('animal');
   const [jsonData, setJsonData] = useState([]);
   // const [isLoading, setIsLosding] = useState(false);
   const [ratelimitRemaining, setratelimitRemaining] = useState(50);
-  const isLoading = useRef(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const isLoadingRef = useRef(false)
   const currentPage = useRef(1); 
   const onSearchHandler = (e) => {
     if(e.key === 'Enter'){
@@ -62,8 +70,8 @@ const App = () => {
 
   const getPhotos = async (page = 1, isNew = true) => {
     try{
-      // setIsLosding(true)
-      isLoading.current = true;
+      setIsLoading(true)
+      isLoadingRef.current = true;
       const result = await axios.get(`${api}?client_id=${accessKey}&query=${filterString}&page=${page}`);
       console.log(result);
       // setJsonData(result.data.results)//當前式不斷覆蓋
@@ -79,8 +87,8 @@ const App = () => {
       setratelimitRemaining(result.headers['x-ratelimit-remaining'])
       currentPage.current = page; //每次都需要確認當前頁
       setTimeout(()=>{
-        // setIsLosding(false);
-        isLoading.current = false;
+        setIsLoading(false);
+        isLoadingRef.current = false;
       }, 1000)
     }catch(error){
       console.log(error)
@@ -91,11 +99,10 @@ const App = () => {
   useEffect(() => {
     getPhotos(1, true);
 
-
     const scrollEvent = () => {
       const height = (listRef.current.offsetHeight + listRef.current.offsetTop) - window.innerHeight;
       // console.log(height)
-      if(!isLoading.current && window.scrollY > height){
+      if(!isLoadingRef.current && window.scrollY > height){
         currentPage.current ++;
         getPhotos(currentPage.current, false)//頁數增加 1
       }
@@ -106,8 +113,20 @@ const App = () => {
       window.removeEventListener('scroll', scrollEvent)
     }
   }, [filterString])
+
+  useEffect(()=> {
+    const body = document.querySelector('body');
+    console.log(body)
+    if(isLoading){
+      body.style.overflow = 'hidden'
+    }else{
+      body.style.overflow = 'auto'
+    }
+  },[isLoading])
+  
   
   return (<div>
+    <Loading isLoading={isLoading}/>
     <SearchBox onSearchHandler={onSearchHandler} filterString={filterString} />
     <p>剩餘請求次數: {ratelimitRemaining}</p>
     <div className='row row-cols-2 g-3' ref=
@@ -130,6 +149,20 @@ ReactDOM.createRoot(document.querySelector('#root'))
   /* CSS 樣式，可以確保圖片不要變形 */
   .img-cover {
     object-fit: cover;
+  }
+
+  .isloading{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
   }
 </style>
 <!-- 🙇🙇練習結束🙇🙇 -->
