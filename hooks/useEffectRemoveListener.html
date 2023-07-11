@@ -47,7 +47,12 @@ const App = () => {
   // #3加入滾動事件，滾動到列表下方時，取得一筆新的
   // #4修正過度觸發的問題 > 加入讀取
 
-  const getPhotos = async (page=1) => {
+  // 取得的新資料，居然在第二頁
+  // 新取得的AJAX，還是舊的Animal
+
+  // #5 輸入文字，資料狀態呈現要正確
+
+  const getPhotos = async (page = 1, isNew = true) => {
     try{
       // setIsLosding(true)
       isLoading.current = true;
@@ -57,8 +62,13 @@ const App = () => {
       // setJsonData([...jsonData, ...result.data.results])
       console.log('update data')
       setJsonData((preData)=>{
+        console.log('更新資料觸發');
+        if(isNew){
+          return [...result.data.results]
+        }
         return [...preData, ...result.data.results]
-      })
+      });
+      currentPage.current = page; //每次都需要確認當前頁
       setTimeout(()=>{
         // setIsLosding(false);
         isLoading.current = false;
@@ -70,19 +80,22 @@ const App = () => {
 
   const listRef = useRef(null)
   useEffect(() => {
-    getPhotos();
+    getPhotos(1, true);
 
-    // 滾動監聽
-    window.addEventListener('scroll', () => {
-      // console.log('scoll',window.scrollY)
-      // console.dir(listRef.current)
+
+    const scrollEvent = () => {
       const height = (listRef.current.offsetHeight + listRef.current.offsetTop) - window.innerHeight;
       // console.log(height)
       if(!isLoading.current && window.scrollY > height){
         currentPage.current ++;
-        getPhotos(currentPage.current)//頁數增加 1
+        getPhotos(currentPage.current, false)//頁數增加 1
       }
-    })
+    }
+    // 滾動監聽
+    window.addEventListener('scroll', scrollEvent);
+    return () => {
+      window.removeEventListener('scroll', scrollEvent)
+    }
   }, [filterString])
   
   return (<div>
