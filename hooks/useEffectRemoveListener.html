@@ -29,10 +29,18 @@ const SearchBox = ({onSearchHandler, filterString}) => {
 }
 
 // let currentPage = 1;
+
+// 剩餘次數
+// 讀取效果
+// 取得單張照片顯示在畫面上
+
+
+
 const App = () => {
   const [filterString, setFilterString] = useState('animal');
   const [jsonData, setJsonData] = useState([]);
   // const [isLoading, setIsLosding] = useState(false);
+  const [ratelimitRemaining, setratelimitRemaining] = useState(50);
   const isLoading = useRef(false)
   const currentPage = useRef(1); 
   const onSearchHandler = (e) => {
@@ -68,6 +76,7 @@ const App = () => {
         }
         return [...preData, ...result.data.results]
       });
+      setratelimitRemaining(result.headers['x-ratelimit-remaining'])
       currentPage.current = page; //每次都需要確認當前頁
       setTimeout(()=>{
         // setIsLosding(false);
@@ -100,6 +109,7 @@ const App = () => {
   
   return (<div>
     <SearchBox onSearchHandler={onSearchHandler} filterString={filterString} />
+    <p>剩餘請求次數: {ratelimitRemaining}</p>
     <div className='row row-cols-2 g-3' ref=
     {listRef}>
       { jsonData.map((item) => 
