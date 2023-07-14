@@ -5,21 +5,31 @@
 <!-- 🔥🔥練習開始🔥🔥 -->
 
 <!-- https://jsonplaceholder.typicode.com/users -->
-<form>
+<form action="https://jsonplaceholder.typicode.com/users" method="POST">
   <div class="mb-3">
     <label for="username" class="form-label">使用者名稱</label
-    ><input id="username" type="text" class="form-control" name="username" />
+    ><input id="username" type="email" class="form-control" name="username" /> 
+    <!-- type="email" 在手機板使用時，點擊input跳出的鍵盤會是適合輸入email的鍵盤 -->
+    <!-- label的for要和input的id一致 -->
   </div>
   <div class="mb-3">
     <label for="password" class="form-label">密碼</label>
+    <input type="password" class="form-control" name="password">
   </div>
   <div class="mb-3">
     <label for="tel">電話</label>
+    <input type="tel" name="phone" id="tel" class="form-control">
+    <!-- type="tel" 在手機板使用時，點擊input跳出的鍵盤會是適合輸入電話號碼的鍵盤 -->
   </div>
   <div class="row mb-3 g-3">
     <div class="col-6">
       <label for="city" class="form-label">縣市</label
       >
+      <select name="city" id="city" class="form-select">
+        <option value="1">台北市</option>
+        <option value="高雄市">高雄市</option>
+        <!-- value是送到後端的key；option內容是給使用者看的選項 -->
+      </select>
     </div>
     <div class="col-6">
       <label for="district" class="form-label">鄉鎮市區</label
@@ -38,9 +48,12 @@
   <div class="mb-3">
     <div class="form-label">素食者</div>
     <div class="form-check">
+      <!-- name在是跟否的選項內，都是vagetarian；value不同；純html的radio value只為純文字(並非真正的boolen) -->
+      <input type="radio" id="vegetarian" name="vegetarian" class="form-check-input" value="true">
       <label class="form-check-label" for="vegetarian">是</label>
     </div>
     <div class="form-check">
+      <input type="radio" id="non-vegetarian" name="vegetarian" class="form-check-input" value="false">
       <label class="form-check-label" for="non-vegetarian">否</label>
     </div>
   </div>
@@ -50,14 +63,14 @@
   </div>
   <div class="mb-3">
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="checkbox" /><label
+      <input class="form-check-input" type="checkbox" id="checkbox" required /><label
         class="form-check-label"
         for="checkbox"
         >確認同意本文件</label
       >
     </div>
   </div>
-  <button type="button" class="btn btn-primary">註冊</button>
+  <button type="submit" class="btn btn-primary">註冊</button>
 </form>
 
 <!-- 🙇🙇練習結束🙇🙇 -->
