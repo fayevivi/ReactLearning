@@ -8,21 +8,50 @@
 <script src="https://cdn.jsdelivr.net/npm/react-hook-form@7.33.1/dist/index.umd.min.js"></script>
 <script type="text/babel">
   const { useState, useEffect } = React;
-  const { useForm } = ReactHookForm;
+  const { useForm, useWatch } = ReactHookForm;
 
   const App = () => {
     const {
       register,
       handleSubmit,
-    } = useForm();
+      watch,
+      setValue,
+      control //for useWatch
+    } = useForm({
+      defaultValues:{
+        username:'vvvvv'
+      }
+    });
     const onSubmit = (data) => {
       console.log(data);
     };
 
     // #watch 當有值寫入時，可以透過 watch 觸發
+    // console.log(watch()) //可監聽表單內所有欄位的變動
+    // console.log(watch('username')) //監聽username欄位的變動
+
+    // useEffect(()=>{
+    //   const subscription = watch((value, {name})=>{
+    //     console.log(value, name);
+    //     if(name === 'like'){
+    //       setValue('username', 'ggg')
+    //     }
+    //   })
+    //   console.log(subscription);
+    //   return ()=> subscription.unsubscribe()
+    // },[watch])
+
 
     // #useWatch，如果要監聽表單變化，並搭配 useEffect 運作
+    const watchForm = useWatch({
+      control
+    });
+      // console.log(watchForm)
+    useEffect(()=>{
+      console.log(watchForm)
+    },[watchForm])
 
+    // watch跟useWatch的差別在useWatch監聽子層元件時，父層元件並不會被更新；watch的話子曾跟父層都會刷新
 
     return (
       <div>
@@ -40,11 +69,11 @@
           </div>
           <div className="mb-3"> 
           <label htmlFor="checkList1">炒麵</label>
-            <input id="checkList1" type="checkbox" name="like" value='炒麵' />
+            <input id="checkList1" type="checkbox" {...register('like')} name="like" value='炒麵' />
             <label htmlFor="checkList2">鍋燒意麵</label>
-            <input id="checkList2" type="checkbox" name="like" value='鍋燒意麵' />
+            <input id="checkList2" type="checkbox" {...register('like')} name="like" value='鍋燒意麵' />
             <label htmlFor="checkList3">炸薯條</label>
-            <input id="checkList3" type="checkbox" name="like" value='炸薯條' />
+            <input id="checkList3" type="checkbox" {...register('like')} name="like" value='炸薯條' />
           </div>
           <button type='submit' className='btn btn-primary'>
             註冊
