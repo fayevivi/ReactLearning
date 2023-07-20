@@ -65,11 +65,22 @@
       mode: 'onTouched',
     });
 
-    const [addressData, setAddressData] = useState([]);
+    const [addressData, setAddressData] = useState([]); //資料為陣列記得要在useState小誇號裡面放[]
 
     const onSubmit= (data) =>{
       console.log(data)
+      console.log(errors)
     }
+
+    const watchForm = useWatch({
+      control,
+    })
+
+    useEffect(()=>{
+      console.log(getValues())
+      // console.log(error);
+    },[watchForm])
+    
     // 拿全台縣市行政區域資料
     useEffect(()=>{
       (async () => {
@@ -85,7 +96,7 @@
 
     return (
       <div>
-        {JSON.stringify(addressData)}
+        {/*JSON.stringify(addressData)*/}{/*若想在畫面上直接看資料可用這個方式渲染在畫面上；資料為JSON格式，所以要記得把JSON轉成字串stringify*/}
         <form action="" onSubmit={handleSubmit(onSubmit)}>
           <Input 
           register={register} 
@@ -167,7 +178,9 @@
               </label>
               <select id='city' className='form-select'>
                 <option>Choose...</option>
-                
+                {addressData.map((city) => {
+                  return <option value={city.CityName} key={city.CityEngName}>{city.CityName}</option>
+                })}
               </select>
             </div>
             <div className='col-6'>
@@ -176,7 +189,12 @@
               </label>
               <select id='district' className='form-select'>
                 <option>Choose...</option>
-                <option>...</option>
+                {
+                  addressData.find((city) => city.CityName === getValues().city)
+                    ?.AreaList?.map((area) => {
+                      return <option value={area} key={area.AreaName}>{area.AreaName}</option>
+                    })
+                }
               </select>
             </div>
           </div>
