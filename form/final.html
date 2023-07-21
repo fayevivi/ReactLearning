@@ -53,6 +53,9 @@
     )
   }
   
+  const Select = () => {
+
+  }
   const App = () => {
     const {
       register,
@@ -80,7 +83,7 @@
       console.log(getValues())
       // console.log(error);
     },[watchForm])
-    
+
     // 拿全台縣市行政區域資料
     useEffect(()=>{
       (async () => {
@@ -176,12 +179,20 @@
               <label htmlFor='city' className='form-label'>
                 縣市
               </label>
-              <select id='city' className='form-select'>
+              <select 
+                id='city'
+                className={`form-select ${errors.city  && 'is-valid'}`}
+                {...register('city', {required:'縣市為必填'})}
+                disabled
+              >
                 <option>Choose...</option>
                 {addressData.map((city) => {
                   return <option value={city.CityName} key={city.CityEngName}>{city.CityName}</option>
                 })}
               </select>
+              {errors.city && (
+                <div className='invalid-feedback'>{errors.city.message}</div>
+              )}
             </div>
             <div className='col-6'>
               <label htmlFor='district' className='form-label'>
